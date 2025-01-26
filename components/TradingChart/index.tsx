@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 
 const TradingChart = () => {
-  const container = useRef();
+  const container = useRef(null);
 
   useEffect(
     () => {
