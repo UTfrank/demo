@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { addTransaction } from "@/store/slice/transactionSlice";
 
 const TransactionForm = () => {

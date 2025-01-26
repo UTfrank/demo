@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const TradingChart = () => {
   const container = useRef();
