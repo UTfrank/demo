@@ -26,7 +26,7 @@ const TradingChart = () => {
         // Widget configuration
         const config = {
           autosize: true,
-          symbol: "NASDAQ:AAPL",
+          symbol: "BITSTAMP:BTCUSD",
           interval: "D",
           timezone: "Etc/UTC",
           theme: "light",
