@@ -1,65 +1,55 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, memo } from "react";
 
 const TradingChart = () => {
-  const container = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const loadTradingViewWidget = () => {
-      if (container.current) {
-        // Clear any existing children
-        container.current.innerHTML = "";
-
-        // Create widget container
-        const widgetContainer = document.createElement("div");
-        widgetContainer.className = "tradingview-widget-container__widget";
-        widgetContainer.style.height = "100%";
-        widgetContainer.style.width = "100%";
-
-        // Create script element
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.async = true;
-        script.src =
-          "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-
-        // Widget configuration
-        const config = {
-          autosize: true,
-          symbol: "BITSTAMP:BTCUSD",
-          interval: "D",
-          timezone: "Etc/UTC",
-          theme: "light",
-          style: "1",
-          locale: "en",
-          allow_symbol_change: true,
-          calendar: false,
-          support_host: "https://www.tradingview.com",
-        };
-
-        // Attach configuration to script
-        script.innerHTML = `
-          window.onload = function() {
-            new TradingView.widget(${JSON.stringify(config)});
-          }
-        `;
-
-        // Append elements
-        container.current.appendChild(widgetContainer);
-        container.current.appendChild(script);
-      }
-    };
-
-    loadTradingViewWidget();
+    if (container.current) {
+      // Create script element
+      const script = document.createElement("script");
+      script.src =
+        "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = `
+        {
+          "autosize": true,
+          "symbol": "BITSTAMP:BTCUSD",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "light",
+          "style": "1",
+          "locale": "en",
+          "allow_symbol_change": true,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }`;
+      container.current.appendChild(script);
+    }
   }, []);
 
   return (
     <div
       className="tradingview-widget-container"
       ref={container}
-      style={{ height: "400px", width: "100%" }}
-    />
+      style={{ height: "100%", width: "100%" }}
+    >
+      <div
+        className="tradingview-widget-container__widget"
+        style={{ height: "calc(100% - 32px)", width: "100%" }}
+      ></div>
+      <div className="tradingview-widget-copyright">
+        <a
+          href="https://www.tradingview.com/"
+          rel="noopener nofollow"
+          target="_blank"
+        >
+          <span className="blue-text">Track all markets on TradingView</span>
+        </a>
+      </div>
+    </div>
   );
 };
 
-export default TradingChart;
+export default memo(TradingChart);
