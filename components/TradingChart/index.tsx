@@ -52,4 +52,4 @@ const TradingChart = () => {
   );
 };
 
-export default memo(TradingChart);
+export default memo(TradingChart)
